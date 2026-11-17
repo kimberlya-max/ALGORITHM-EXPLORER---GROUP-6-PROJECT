@@ -1,0 +1,6 @@
+{
+  "name": "algorithm-explorer",
+  "private": true,
+  "type": "module",
+  "description": "Browser-based algorithm exploration project"
+}

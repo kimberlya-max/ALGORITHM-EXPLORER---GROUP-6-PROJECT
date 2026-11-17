@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Explore algorithms with live steps, operation counts, and complexity analysis.">
+    <title>Algorithm Explorer</title>
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="shell">
+        <p class="eyebrow">CSC2107 · Design and Analysis of Algorithms</p>
+        <h1>Algorithm Explorer</h1>
+        <p>Run algorithms on your own input and explore each step, operation counts, and growth-rate analysis.</p>
+      </div>
+    </header>
+    <main class="shell">
+      <section class="panel input-panel" aria-labelledby="run-heading">
+        <h2 id="run-heading">Choose a module and algorithm</h2>
+        <form id="algorithm-form">
+          <div class="form-grid">
+            <label>Module
+              <select id="category" name="category">
+                <option value="sorting">Sorting Lab</option>
+                <option value="recursion">Recursion Lab</option>
+                <option value="structure">Data Structures Lab</option>
+                <option value="analysis">Time Complexity Analysis</option>
+              </select>
+            </label>
+          </div>
+          <div id="algorithm-inputs">
+            <label>Algorithm or structure
+              <select id="algorithm" name="algorithm"></select>
+            </label>
+            <label id="capacity-field" hidden>Array capacity (1–100)
+              <input id="structure-capacity" type="number" min="1" max="100" value="5">
+            </label>
+            <label for="user-input">Input</label>
+            <textarea id="user-input" name="input" rows="3" placeholder="Enter an input value"></textarea>
+            <p id="input-help" class="field-help">Provide values for the selected algorithm.</p>
+            <div class="button-row">
+              <button type="submit">Run algorithm</button>
+              <button type="button" class="secondary" id="compare-button">Compare all five sorts</button>
+            </div>
+          </div>
+          <p id="error-message" class="error-message" role="alert" hidden></p>
+        </form>
+      </section>
+
+      <section id="compare-panel" class="panel" hidden>
+        <h2>Sorting comparison</h2>
+        <p>All five required sorting algorithms run on the same input.</p>
+        <div id="compare-results" class="table-wrap"></div>
+      </section>
+
+      <section id="results" class="results" aria-live="polite" hidden>
+        <section class="panel">
+          <h2>Result</h2>
+          <p id="result-text" class="result-text"></p>
+          <div class="metrics-grid">
+            <section class="metric-card">
+              <h3>Measured running time</h3>
+              <p id="time-value"></p>
+            </section>
+            <section class="metric-card">
+              <h3>Theoretical complexity</h3>
+              <div id="complexity-value"></div>
+            </section>
+          </div>
+        </section>
+        <section class="panel" id="recursion-panel" hidden>
+          <h2>Base case and recursive case</h2>
+          <p><strong>Base case:</strong> <span id="base-case"></span></p>
+          <p><strong>Recursive case:</strong> <span id="recursive-case"></span></p>
+        </section>
+        <section class="panel" id="visualization-panel" hidden>
+          <div class="panel-heading">
+            <h2>Sorting visualization</h2>
+            <div class="playback-controls">
+              <button type="button" class="secondary" id="sort-step">Step</button>
+              <button type="button" class="secondary" id="sort-play">Auto-play</button>
+              <button type="button" class="secondary" id="sort-reset">Reset</button>
+            </div>
+          </div>
+          <label class="speed-control">Playback speed
+            <input id="sort-speed" type="range" min="50" max="1000" step="50" value="250">
+            <output id="sort-speed-value" for="sort-speed">250 ms</output>
+          </label>
+          <div id="bars" class="bars" aria-label="Array visualization"></div>
+        </section>
+        <section class="panel" id="hanoi-panel" hidden>
+          <div class="panel-heading">
+            <h2>Tower of Hanoi</h2>
+            <p id="hanoi-move-counter" aria-live="polite"></p>
+          </div>
+          <div class="playback-controls">
+            <button type="button" class="secondary" id="hanoi-step">Step</button>
+            <button type="button" class="secondary" id="hanoi-play">Start / Pause</button>
+            <button type="button" class="secondary" id="hanoi-reset">Reset</button>
+          </div>
+          <label class="speed-control">Animation speed
+            <input id="hanoi-speed" type="range" min="100" max="1500" step="100" value="600">
+            <output id="hanoi-speed-value" for="hanoi-speed">600 ms</output>
+          </label>
+          <div id="hanoi-board" class="hanoi-board" aria-label="Tower of Hanoi board"></div>
+        </section>
+        <section class="panel">
+          <h2>Operation counts</h2>
+          <div id="operations-table" class="table-wrap"></div>
+        </section>
+        <section class="panel">
+          <h2>Steps</h2>
+          <p id="steps-note" class="field-help"></p>
+          <ol id="step-list" class="step-list"></ol>
+        </section>
+      </section>
+
+      <section id="benchmark-panel" class="panel benchmark-panel" hidden>
+        <h2>Module D: Time Complexity Analysis</h2>
+        <p>Measure the selected sort on random, sorted, or reverse-sorted input. Each size is timed at least three times.</p>
+        <div class="form-grid benchmark-options">
+          <label>Sorting algorithm
+            <select id="benchmark-algorithm">
+              <option value="bubbleSort">Bubble sort</option>
+              <option value="selectionSort">Selection sort</option>
+              <option value="insertionSort">Insertion sort</option>
+              <option value="mergeSort">Merge sort</option>
+              <option value="quickSort">Quicksort (first pivot)</option>
+              <option value="quickSortRandom">Quicksort (random pivot)</option>
+            </select>
+          </label>
+          <label>Input case
+            <select id="benchmark-case">
+              <option value="random">Random</option>
+              <option value="sorted">Already sorted</option>
+              <option value="reversed">Reverse sorted</option>
+            </select>
+          </label>
+        </div>
+        <label for="benchmark-sizes">Input sizes</label>
+        <input id="benchmark-sizes" type="text" value="100, 500, 1000, 2000, 5000, 10000" aria-describedby="benchmark-size-help">
+        <p id="benchmark-size-help" class="field-help">For merge sort and randomized quicksort, add 50000, 100000. Quadratic sorts are limited to 10000.</p>
+        <button type="button" id="benchmark-button">Run benchmark</button>
+        <div id="benchmark-results" class="table-wrap"></div>
+        <div id="benchmark-chart" class="benchmark-chart" aria-label="Measured time chart"></div>
+      </section>
+    </main>
+    <footer class="shell site-footer">
+      <p>Measured time varies by browser, computer, and system load. Big O describes growth, not milliseconds.</p>
+    </footer>
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>
